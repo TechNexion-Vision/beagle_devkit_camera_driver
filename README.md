@@ -315,7 +315,7 @@ $ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video3 ! \
 media-ctl -V '"tevs 5-0048":0 [fmt:UYVY8_1X16/1280x720]'
 media-ctl -V '"30102000.ticsi2rx":0 [fmt:UYVY8_1X16/1280x720]'
 
-$ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video0 ! \
+$ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video3 ! \
 "video/x-raw, format=(string)UYVY, width=(int)1280, height=(int)720" ! \
 fpsdisplaysink video-sink=glimagesink sync=false
 ```
