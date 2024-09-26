@@ -11,7 +11,7 @@
 
 ## Support System Version
 
-- [BeagleY-AI Debian 12.5 2024-06-19 XFCE](https://www.beagleboard.org/distros/beagley-ai-debian-12-5-2024-06-19-xfce) [[kernel 6.1.80-ti-arm64-r57]](https://github.com/beagleboard/linux/tree/v6.1.80-ti-arm64-r57)
+- [BeaglePlay Debian 12.6 2024-07-04 XFCE](https://www.beagleboard.org/distros/beagleplay-debian-12-6-2024-07-04-xfce) [[kernel 6.6.32-ti-arm64-r7]](https://github.com/beagleboard/linux/tree/6.6.32-ti-arm64-r7)
 
 ## Support Camera Modules
 
@@ -29,16 +29,16 @@
 
 ## Supported TI Development Kit
 
-- [BeagleY-AI](https://www.ti.com/tool/BEAGLEY-AI)
+- [BeaglePlay](https://www.ti.com/tool/BEAGL-PLAY-SBC)
 
 ---
 ## Install TN Camera on TI Development Kit
 
-#### Adaptor for **BeagleY-AI**
+#### Adaptor for **BeaglePlay**
 
 TEVS-RPI22 Adaptor for TEVS
 
-> Connect TEVS camera and TEVS-RPI22 adaptor to **BeagleY-AI - "CSI0"** directly.
+> Connect TEVS camera and TEVS-RPI22 adaptor to **BeaglePlay - CSI** directly.
 
 <a href="https://www.technexion.com/products/embedded-vision/mipi-csi2/evk/tevs-ar0144-c-s33-ir-rpi22/" target="_blank">
  <img src="https://www.technexion.com/wp-content/uploads/2023/11/tevs-ar0144-c-s33-ir-rpi22.png" width="400" height="400" />
@@ -46,9 +46,9 @@ TEVS-RPI22 Adaptor for TEVS
 
 ---
 
-#### Method 1 - Using Technexion Pre-built modules, only for **kernel 6.1.80-ti-arm64-r57**
+#### Method 1 - Using Technexion Pre-built modules, only for **kernel 6.6.32-ti-arm64-r7**
 
-1. Make a SD card with *"BeagleY-AI Debian 12.5 2024-06-19 XFCE"* image.
+1. Make a SD card with *"BeaglePlay Debian 12.6 2024-07-04 XFCE"* image.
 
 2. Mount boot partition and configure sysconf.txt before the first boot.
 
@@ -65,35 +65,35 @@ $ vim /media/${user}/BOOT/sysconf.txt
 > user_password=beagle
 ```
 
-3. Boot BeagleY-AI with SD card.
+3. Boot BeaglePlay with SD card.
 
 4. Download pre-built modules.
 
 ```shell
-$ wget https://download.technexion.com/demo_software/EVK/TI/BeagleY-AI/pre-built-modules/latest/tn_camera_module_beagley_ai_6.1.80.tar.gz
+$ wget https://download.technexion.com/demo_software/EVK/TI/BeaglePlay/pre-built-modules/latest/tn_camera_module_beagleplay_6.6.32.tar.gz
 ```
 
 4. Uncompress the modules.
 
 ```shell
-$ tar -xf tn_camera_module_beagley_ai_6.1.80.tar.gz
+$ tar -xf tn_camera_module_beagleplay_6.6.32.tar.gz
 ```
 
 5. Run installation script.
 
 ```shell
-$ cd tn_camera_module_beagley_ai_6.1.80/
+$ cd tn_camera_module_beagleplay_6.6.32/
 $ sh tn_install.sh
 [sudo] password for beagle:
 ****** TechNexion Camera Driver Installation ******
-This installation is easy to install TechnNexion Camera Drivers for BeagleY-AI.
+This installation is easy to install TechnNexion Camera Drivers for BeaglePlay.
 Before start to install camera driver, You should BACKUP your image and config
 to avoid any file you lost while installing process.
 Do you want to continue?[Y/n]y
 Continuing with the installation...
 Install TN-CAM modules: tevs.ko.xz
 Installed TN-CAM module file Done.
-Install TN-CAM DTBO file: k3-am67a-beagley-ai-csi0-tevs-rpi22.dtbo
+Install TN-CAM DTBO file: k3-am625-beagleplay-csi2-tevs-rpi22.dtbo
 Installed TN-CAM DTBO file Done.
 Add TN-CAM Configuration for modules: tevs-rpi22
 label microSD (default)
@@ -125,10 +125,10 @@ $ sudo apt install -y crossbuild-essential-arm64
 
 ```shell
 # beagleboard linux kerbel
-$ git clone --depth=1 -b v6.1.80-ti-arm64-r57 https://github.com/beagleboard/linux.git
+$ git clone --depth=1 -b v6.6.32-ti-arm64-r7 https://github.com/beagleboard/linux.git
 
 # technexion beagle camera driver
-$ git clone --depth=1 -b v6.1.80-ti-arm64 https://github.com/TechNexion-Vision/beagle_devkit_camera_driver.git
+$ git clone --depth=1 -b v6.6.32-ti-arm64 https://github.com/TechNexion-Vision/beagle_devkit_camera_driver.git
 ```
 
 4. Copy TN beagle camera driver to beagleboard linux kernel.
@@ -145,7 +145,7 @@ $ cd linux
 
 # default configuration
 $ make distclean
-$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bb.org_defconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
 
 # config camera
 $ make menuconfig
@@ -158,12 +158,12 @@ $ make menuconfig
 #            Press "m", save to original name (.config) and exit
 
 # build kernel
-$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LOCALVERSION="-tn" -j$(nproc)
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LOCALVERSION="-tn-arm64" -j$(nproc)
 $ mkdir -p modules
 $ sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=./modules modules_install
 ```
 
-6. Plug in the SD card which burned *"BeagleY-AI Debian 12.5 2024-06-19 XFCE"* image to PC.
+6. Plug in the SD card which burned *"BeaglePlay Debian 12.6 2024-07-04 XFCE"* image to PC.
 
 7. Configure sysconf.txt before the first boot.
 
@@ -186,11 +186,11 @@ $ vim /media/${user}/BOOT/sysconf.txt
 $ sudo cp arch/arm64/boot/Image /media/$(users)/BOOT/
 $ sudo cp arch/arm64/boot/dts/ti/*.dtbo /media/$(users)/BOOT/overlays/
 # you can use "make kernelversion" to check kernel version
-$ sudo cp -ra modules/lib/modules/$(make kernelversion)-tn/ /media/$(users)/rootfs/lib/modules/
+$ sudo cp -ra modules/lib/modules/$(make kernelversion)-tn-$(git_commit)-dirty/ /media/$(users)/rootfs/lib/modules/
 $ sync
 ```
 
-9. Boot BeagleY-AI with SD card.
+9. Boot BeaglePlay with SD card.
 
 10. Modify the extlinux.conf file to add camera configuraion.
 
@@ -199,13 +199,12 @@ $ sudo nano /boot/firmware/extlinux/extlinux.conf
 
 > label microSD (default)
 >     kernel /Image
->     append console=ttyS2,115200n8 root=/dev/mmcblk1p3 ro rootfstype=ext4 resume=/dev/mmcblk1p2 rootwait net.ifnames=0 quiet
+>     append root=/dev/mmcblk1p3 ro rootfstype=ext4 resume=/dev/mmcblk1p2 rootwait net.ifnames=0 quiet
 >     fdtdir /
->     fdt /ti/k3-am67a-beagley-ai.dtb
->     fdtoverlays /overlays/k3-am67a-beagley-ai-csi0-tevs-rpi22.dtbo
+>     fdtoverlays /overlays/k3-am625-beagleplay-csi2-tevs-rpi22.dtbo
 >     initrd /initrd.img
 ```
-Add the overlay to `label microSD (default)` and append `fdtoverlays /overlays/k3-am67a-beagley-ai-csi0-tevs-rpi22.dtbo` after the `fdt` line.
+Add the overlay to `label microSD (default)` and append `fdtoverlays /overlays/k3-am625-beagleplay-csi2-tevs-rpi22.dtbo` after the `fdtdir` line.
 
 11.  Restart system.
 
@@ -224,7 +223,7 @@ If you succeed in initialing the camera, you can follow the steps to open the ca
 ```shell
 $ media-ctl -d /dev/media0 -p
 Device topology
-- entity 1: 30102000.ticsi2rx (7 pads, 7 links)
+- entity 1: 30102000.ticsi2rx (5 pads, 5 links)
             type V4L2 subdev subtype Unknown flags 0
             device node name /dev/v4l-subdev0
         pad0: Sink
@@ -239,17 +238,13 @@ Device topology
                 -> "30102000.ticsi2rx context 2":0 [ENABLED,IMMUTABLE]
         pad4: Source
                 -> "30102000.ticsi2rx context 3":0 [ENABLED,IMMUTABLE]
-        pad5: Source
-                -> "30102000.ticsi2rx context 4":0 [ENABLED,IMMUTABLE]
-        pad6: Source
-                -> "30102000.ticsi2rx context 5":0 [ENABLED,IMMUTABLE]
 
-- entity 9: cdns_csi2rx.30101000.csi-bridge (5 pads, 2 links)
+- entity 7: cdns_csi2rx.30101000.csi-bridge (5 pads, 2 links)
             type V4L2 subdev subtype Unknown flags 0
             device node name /dev/v4l-subdev1
         pad0: Sink
                 [fmt:UYVY8_1X16/640x480 field:none colorspace:srgb xfer:srgb ycbcr:601 quantization:lim-range]
-                <- "tevs 5-0048":0 [ENABLED,IMMUTABLE]
+                <- "tevs 4-0048":0 [ENABLED,IMMUTABLE]
         pad1: Source
                 [fmt:UYVY8_1X16/640x480 field:none colorspace:srgb xfer:srgb ycbcr:601 quantization:lim-range]
                 -> "30102000.ticsi2rx":0 [ENABLED,IMMUTABLE]
@@ -257,7 +252,7 @@ Device topology
         pad3: Source
         pad4: Source
 
-- entity 15: tevs 5-0048 (1 pad, 1 link)
+- entity 13: tevs 4-0048 (1 pad, 1 link)
              type V4L2 subdev subtype Sensor flags 0
              device node name /dev/v4l-subdev2
         pad0: Source
@@ -266,9 +261,9 @@ Device topology
                  crop:(0,0)/640x480]
                 -> "cdns_csi2rx.30101000.csi-bridge":0 [ENABLED,IMMUTABLE]
 
-- entity 21: 30102000.ticsi2rx context 0 (1 pad, 1 link)
+- entity 19: 30102000.ticsi2rx context 0 (1 pad, 1 link)
              type Node subtype V4L flags 0
-             device node name /dev/video3
+             device node name /dev/video0
         pad0: Sink
                 <- "30102000.ticsi2rx":1 [ENABLED,IMMUTABLE]
 
@@ -301,10 +296,10 @@ pad=0,width=1280,height=720,code=0x2006
 >         Interval: 0.017s (60.000 fps)
 ```
 
-3. Bring up the camera (/dev/video3) with 640x480 by Gstreamer pipeline.
+3. Bring up the camera (/dev/video0) with 640x480 by Gstreamer pipeline.
 
 ```shell
-$ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video3 ! \
+$ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video0 ! \
 "video/x-raw, format=UYVY, width=640, height=480" ! fpsdisplaysink sync=false
 ```
 
@@ -312,7 +307,7 @@ $ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video3 ! \
 
 ```shell
 # modify media resoltion
-media-ctl -V '"tevs 5-0048":0 [fmt:UYVY8_1X16/1280x720]'
+media-ctl -V '"tevs 4-0048":0 [fmt:UYVY8_1X16/1280x720]'
 media-ctl -V '"30102000.ticsi2rx":0 [fmt:UYVY8_1X16/1280x720]'
 
 $ DISPLAY=:0 gst-launch-1.0 v4l2src device=/dev/video0 ! \

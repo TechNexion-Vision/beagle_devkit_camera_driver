@@ -2165,7 +2165,7 @@ static struct i2c_driver sensor_i2c_driver = {
 		.of_match_table = tevs_dt_ids,
 		.pm = &tevs_pm_ops,
 	},
-	.probe_new = tevs_probe,
+	.probe = tevs_probe,
 	.remove = tevs_remove,
 };
 
