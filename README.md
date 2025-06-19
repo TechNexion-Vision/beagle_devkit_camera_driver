@@ -330,3 +330,7 @@ fpsdisplaysink video-sink=glimagesink sync=false
 ---
 
 ## WIKI Pages
+
+[TechNexion Camera Modules for TI BeaglePlay](https://tn-docusaurus.vercel.app/docs/embedded-vision/tevs/usage-guides/ti/ti-beagleplay-tevs-camera-usage-guide)
+
+[TechNexion Camera Modules for TI BeagleY-AI](https://tn-docusaurus.vercel.app/docs/embedded-vision/tevs/usage-guides/ti/ti-beagley-ai-tevs-camera-usage-guide)
