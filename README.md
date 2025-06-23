@@ -7,5 +7,5 @@
 
 In this guide, you can use the following cameras on BeagleY-AI.
 
-[TechNexion cameras Developer Guide with Ti BeaglePlay/BeagleY-AI](https://tn-docusaurus.vercel.app/docs/embedded-vision/tevs/usage-guides/ti/)
+[TechNexion cameras Developer Guide with Ti BeaglePlay/BeagleY-AI](https://developer.technexion.com/docs/embedded-vision/tevs/usage-guides/ti/)
 
